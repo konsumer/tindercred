@@ -8,6 +8,7 @@ var gui = require('nw.gui')
 var win = gui.Window.get()
 // win.showDevTools()
 
+// make copy/paste work on OSX
 var nativeMenuBar = new gui.Menu({ type: 'menubar' })
 try {
   nativeMenuBar.createMacBuiltin('TinderCred')
@@ -16,25 +17,33 @@ try {
   console.log(ex.message)
 }
 
-function facebookLogin (callback) {
-  var loginWindow = window.open('https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token', 'Login facebook', false)
-  loginWindow.addEventListener('load', function () {
-    var t = loginWindow.document.URL.match(/#access_token=(.+)&/)
-    var info = {}
-    if (t && t[1]) {
-      loginWindow.close()
-      info.token = t[1]
-      fetch('https://graph.facebook.com/v2.3/me?access_token=' + info.token)
-        .then(function (r) {
-          return r.json()
-        })
-        .then(function (me) {
-          info.id = me.id
-          document.body.innerHTML = '<pre><code>' + JSON.stringify(info, null, 2) + '</code></pre>'
-        })
-    }
+function facebookLogin () {
+  return new Promise(function (resolve, reject) {
+    var loginWindow = window.open('https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token', 'Login facebook', false)
+    loginWindow.addEventListener('load', function () {
+      var t = loginWindow.document.URL.match(/#access_token=(.+)&/)
+      if (t && t[1]) {
+        loginWindow.close()
+        fetch('https://graph.facebook.com/v2.3/me?access_token=' + t[1])
+          .then(function (r) {
+            return r.json()
+          })
+          .then(function (me) {
+            me.token = t[1]
+            resolve(me)
+          })
+          .catch(reject)
+      }
+    })
   })
 }
 
 facebookLogin()
+  .then(function(me){
+    var info = {
+      id: me.id,
+      token: me.token
+    }
+    document.body.innerHTML = '<pre><code>' + JSON.stringify(info, null, 2) + '</code></pre>'
+  })
 </script>
