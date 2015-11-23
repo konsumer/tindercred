@@ -25,10 +25,10 @@ function facebookLogin (callback) {
       loginWindow.close()
       info.token = t[1]
       fetch('https://graph.facebook.com/v2.3/me?access_token=' + info.token)
-        .then(function(r){
+        .then(function (r) {
           return r.json()
         })
-        .then(function(me){
+        .then(function (me) {
           info.id = me.id
           document.body.innerHTML = '<pre><code>' + JSON.stringify(info, null, 2) + '</code></pre>'
         })
