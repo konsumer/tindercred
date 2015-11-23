@@ -1,0 +1,23 @@
+{
+  "name": "tindercred",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "start": "nwbuild -v 0.12.3 -r app",
+    "build": "nwbuild -v 0.12.3 app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konsumer/tindercred.git"
+  },
+  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konsumer/tindercred/issues"
+  },
+  "homepage": "https://github.com/konsumer/tindercred#readme",
+  "devDependencies": {
+    "nw-builder": "^2.0.2"
+  }
+}

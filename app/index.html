@@ -1,0 +1,41 @@
+<body>
+Please wait.
+</body>
+<script>
+var gui = require('nw.gui');
+var win = gui.Window.get();
+
+// win.showDevTools();
+
+var nativeMenuBar = new gui.Menu({ type: "menubar" })
+try {
+  nativeMenuBar.createMacBuiltin("TinderCred")
+  win.menu = nativeMenuBar
+} catch (ex) {
+  console.log(ex.message)
+}
+
+function facebookLogin(callback){
+  var loginWindow = window.open('https://www.facebook.com/dialog/oauth?client_id=464891386855067&redirect_uri=https://www.facebook.com/connect/login_success.html&scope=basic_info,email,public_profile,user_about_me,user_activities,user_birthday,user_education_history,user_friends,user_interests,user_likes,user_location,user_photos,user_relationship_details&response_type=token', 'Login facebook', false);
+  loginWindow.addEventListener('load', function(){
+    var t = loginWindow.document.URL.match(/#access_token=(.+)&/)
+    var info = {}
+    if (t && t[1]){
+      loginWindow.close()
+      info.token = t[1]
+      var xhttp = new XMLHttpRequest()
+      xhttp.open('GET', 'https://graph.facebook.com/v2.3/me?access_token=' + info.token, true)
+      xhttp.onreadystatechange = function() {
+        var g = JSON.parse(xhttp.responseText)
+        info.id = g.id
+        document.body.innerHTML = '<pre><code>' + JSON.stringify(info,null,2) + '</code></pre>'
+      }
+      xhttp.send()
+    }
+  });
+};
+
+facebookLogin();
+
+
+</script>

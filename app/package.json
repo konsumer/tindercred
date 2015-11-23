@@ -1,0 +1,11 @@
+{
+  "name": "tindercred",
+  "version": "1.0.0",
+  "main": "index.html",
+  "private": true,
+  "author": "David Konsumer <konsumer@jetboystudio.com>",
+  "license": "MIT",
+  "window": {
+    "toolbar": false
+  }
+}
