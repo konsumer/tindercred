@@ -1,7 +1,7 @@
 {
   "name": "tindercred",
   "version": "1.0.0",
-  "description": "",
+  "description": "display credentials for facebook authentication on tinder",
   "private": true,
   "scripts": {
     "start": "nwbuild -v 0.12.3 -r app",
