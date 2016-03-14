@@ -17,7 +17,9 @@
     "url": "https://github.com/konsumer/tindercred/issues"
   },
   "homepage": "https://github.com/konsumer/tindercred#readme",
-  "devDependencies": {
-    "nw-builder": "^2.0.2"
+  "devDependencies": {},
+  "dependencies": {
+    "jstinder": "github:konsumer/jstinder",
+    "nw-builder": "^2.2.0"
   }
 }
