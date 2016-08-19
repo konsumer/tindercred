@@ -7,7 +7,10 @@ var gui = require('nw.gui')
 var tinder = require('jstinder')
 
 var win = gui.Window.get()
-win.showDevTools()
+
+if (process.env.NODE_ENV === 'development') {
+  win.showDevTools()
+}
 
 // make copy/paste work on OSX
 var nativeMenuBar = new gui.Menu({ type: 'menubar' })

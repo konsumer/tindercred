@@ -4,7 +4,7 @@
   "description": "display credentials for facebook authentication on tinder",
   "private": true,
   "scripts": {
-    "start": "nwbuild -v 0.12.3 -r app",
+    "start": "NODE_ENV=development nwbuild -v 0.12.3 -r app",
     "build": "nwbuild -v 0.12.3 -p win32,win64,osx64,linux32,linux64 app"
   },
   "repository": {
